@@ -21,7 +21,7 @@ export default function Character({ params }: { params: { slug: string } }) {
       setChar(data.character)
     }
   }, [data])
-  console.log(data);
+
   return (
     <div className="container mx-auto mt-10">
       <Card className="flex flex-col justify-center items-center">

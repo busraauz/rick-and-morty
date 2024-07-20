@@ -2,8 +2,10 @@
 
 import {
   ColumnDef,
+  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   SortingState,
@@ -20,6 +22,8 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import React from "react"
+import { Input } from "../ui/input"
+import { DebounceInput } from "../DebounceInput"
 
 
 interface DataTableProps<TData, TValue> {
@@ -30,6 +34,8 @@ interface DataTableProps<TData, TValue> {
   setPreviousPage: () => void
   setNextPage: () => void
   onRowClick: (row: TData) => void
+  filter: string
+  setFilter: (filter: string) => void
 }
 
 export function DataTable<TData, TValue>({
@@ -39,7 +45,9 @@ export function DataTable<TData, TValue>({
   next,
   setPreviousPage,
   setNextPage,
-  onRowClick
+  onRowClick,
+  filter,
+  setFilter
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const table = useReactTable({
@@ -53,9 +61,11 @@ export function DataTable<TData, TValue>({
       sorting,
     },
   })
-
   return (
     <div>
+      <div className="flex items-center py-4">
+        <DebounceInput placeholder="Search" value={filter} onChange={setFilter} />
+      </div>
       <div className="rounded-md border">
         <Table>
           <TableHeader>

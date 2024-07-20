@@ -19,7 +19,6 @@ export default function About() {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
-  console.log(data);
   return (
     <div className="container mx-auto mt-10">
       <div className="bg-card p-6 rounded-lg">

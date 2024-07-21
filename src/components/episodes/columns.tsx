@@ -31,7 +31,7 @@ export const columns: ColumnDef<IEpisode>[] = [
       const chars: IEpisodeChar[] = row.getValue('characters')
 
       return <div className="flex">
-        {chars.slice(0, 4).map((c, index) => <Avatar className="-mr-4" title={c.name}>
+        {chars.slice(0, 4).map((c) => <Avatar key={c.id} className="-mr-4" title={c.name}>
           <AvatarImage src={c.image} />
         </Avatar>)}
         <Avatar  >

@@ -4,21 +4,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { RiExpandUpDownLine } from "react-icons/ri";
+import { ICharacter } from "@/graphql/types";
+import { cn } from "@/lib/utils";
 
-export type Characters = {
-  id: string
-  image: string
-  name: string
-  status: "Alive" | "Dead" | "unknown"
-  gender: 'Female' | 'Male' | 'Genderless' | 'unknown'
-  species: string
-  type: string
-  location: {
-    name: string
-  }
-}
 
-export const columns: ColumnDef<Characters>[] = [
+
+export const columns: ColumnDef<ICharacter>[] = [
   {
     accessorKey: "image",
     header: "Image",
@@ -49,8 +40,14 @@ export const columns: ColumnDef<Characters>[] = [
     header: "Status",
     cell: ({ row }) => {
       const value = row.getValue('status') === 'unknown' ? 'Unknown' : row.getValue('status') as string;
-      const className = value === 'Alive' ? 'text-primary' : value === 'Dead' ? 'text-destructive' : 'text-muted-foreground'
-      return <Badge variant="outline" className={className}>{value}</Badge>
+      const className = value === 'Alive' ? 'bg-primary' : value === 'Dead' ? 'bg-destructive' : 'bg-muted-foreground'
+      return <Badge className="gap-3 py-1 px-2" variant="outline">
+        <span className="relative flex h-3 w-3">
+          <span className={cn("animate-ping absolute inline-flex h-full w-full rounded-full opacity-75", className)}></span>
+          <span className={cn("relative inline-flex rounded-full h-3 w-3", className)}></span>
+        </span>
+        <span>{value}</span>
+      </Badge>
     },
   },
   {
